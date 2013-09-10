@@ -438,6 +438,9 @@
                     _.each(this.relations, function (relation) {
                         var attr = this.attributes[relation.key];
                         if (attr) {
+                            if (!attr.toJSON) {
+                                throw new Error('value of ' + relation.key + ' must implement a `toJSON` method');
+                            }
                             aJson = attr.toJSON(options);
                             json[relation.key] = _.isArray(aJson) ? _.compact(aJson) : aJson;
                         }
